@@ -23,15 +23,14 @@ class Preference:
     def __init__(self, n): # n is the size of the list
         self.size_of_list = n
         self.plist = np.zeros(n , dtype = np.int8)
-        self.qlist = np.zeros(n , dtype = np.int8)
 
-    #################################################################################
-    # sample_preference samples P from the a distributions defined by ptype:        #
-    #   uniform: uniform distribution form set of all ranking lists.                #
-    #   bistochastic0: params should be a distribution on {0,..., n} for the		#
-	#				   placement of the first memeber, i.e. i = 0			        #
-    #   distModel: params should be a set of sampler functions  from [0,1]          #
-    #################################################################################
+    ###########################################################################
+    # sample_preference samples P from a distribution defined by ptype:	      #
+    #   uniform: uniform distribution from set of all ranking lists.          #
+    #   bistochastic0: params should be a distribution on {0,..., n} for the  #
+	#				   placement of the first memeber, i.e. i = 0		      #
+    #   distModel: params should be a set of sampler functions  from [0,1]    #
+    ###########################################################################
     def sample_preference(self, ptype = "uniform", params = None):
 
 		if ptype == "uniform":
@@ -64,21 +63,16 @@ class Preference:
 			print "ptype is not valid"
 			raise
 
-		self.qlist = index_to_value(self.plist)
-
 class Preference_lists:
 	def __init__(self, n, m): # m preference list of size n
 		self.num_of_lists = n
 		self.size_of_list = m
 		self.plist = np.zeros([n, m], dtype = np.int8) 
-		self.qlist = np.zeros([n, m], dtype = np.int8) 
 	def sample_preferences(self, ptype = 'uniform', params = None):
 		for i in range(self.num_of_lists):
 			P = Preference(self.size_of_list);
 			P.sample_preference(ptype, params);
 			self.plist[i,:] = P.plist
-			self.qlist[i,:] = P.qlist
-	
 	
 class Matching_problem:
 
